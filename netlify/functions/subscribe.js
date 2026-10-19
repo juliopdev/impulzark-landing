@@ -47,7 +47,7 @@ exports.handler = async (event) => {
     await col.insertOne({
       email,
       nombre,
-      precio_visto: 'S/99/mes',
+      precio_visto: 'S/19.90/mes',
       ts: new Date(),
     });
 
