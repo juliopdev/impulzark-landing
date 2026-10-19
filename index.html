@@ -1,0 +1,490 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="UTF-8">
+<title>ImpulZArk · Lista de espera</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+/* === TOKENS — Arca, dark first === */
+:root {
+  --bg:          #07091A;
+  --sur:         #0F1628;
+  --raise:       #182040;
+  --bdr:         rgba(245,158,11,.18);
+  --pri:         #F59E0B;
+  --acc:         #14B8A6;
+  --txt:         #FEF9F0;
+  --mut:         #8C8C7A;
+  --glo:         rgba(245,158,11,.4);
+  --hdr-glass:   rgba(7,9,26,.76);
+  --card-glass:  rgba(255,255,255,.04);
+  --card-bdr:    rgba(255,255,255,.07);
+  --inp-bg:      rgba(255,255,255,.05);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:#FEFBF3; --sur:#F0EBE0; --raise:#FFF3D4;
+    --bdr:rgba(180,83,9,.14); --pri:#B45309; --acc:#0F766E;
+    --txt:#1A1100; --mut:#6B6040; --glo:rgba(180,83,9,.3);
+    --hdr-glass:rgba(254,251,243,.88);
+    --card-glass:rgba(255,255,255,.72);
+    --card-bdr:rgba(0,0,0,.07); --inp-bg:rgba(255,255,255,.8);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:#FEFBF3; --sur:#F0EBE0; --raise:#FFF3D4;
+  --bdr:rgba(180,83,9,.14); --pri:#B45309; --acc:#0F766E;
+  --txt:#1A1100; --mut:#6B6040; --glo:rgba(180,83,9,.3);
+  --hdr-glass:rgba(254,251,243,.88);
+  --card-glass:rgba(255,255,255,.72);
+  --card-bdr:rgba(0,0,0,.07); --inp-bg:rgba(255,255,255,.8);
+  color-scheme: light;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0 }
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: var(--bg); color: var(--txt);
+  font-size: 16px; line-height: 1.6;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg); z-index: 20;
+}
+.w {
+  max-width: 760px; margin: 0 auto;
+  padding-left:  max(20px, env(safe-area-inset-left,  0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+/* === HEADER (glass) === */
+header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: var(--hdr-glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--bdr);
+}
+.hdr-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-block: 14px;
+  max-width: 760px; margin: 0 auto;
+  padding-left:  max(20px, env(safe-area-inset-left,  0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.logo-mark { display: flex; align-items: center; gap: 9px }
+.logo-word {
+  font-family: 'Syne', system-ui, sans-serif;
+  font-weight: 800; font-size: 1.1rem; letter-spacing: -.02em; color: var(--txt);
+}
+.logo-word b { color: var(--pri) }
+.hdr-btn {
+  font-family: inherit; font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--pri); background: none;
+  border: 1.5px solid color-mix(in srgb, var(--pri) 40%, transparent);
+  border-radius: 8px; padding: 8px 16px; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.hdr-btn:hover {
+  background: color-mix(in srgb, var(--pri) 10%, transparent);
+  border-color: var(--pri);
+}
+
+/* === HERO === */
+.hero {
+  position: relative; overflow: hidden;
+  padding-block: 80px 96px; text-align: center;
+  background: var(--bg);
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 700px 400px at 25% 65%, rgba(245,158,11,.07) 0%, transparent 65%),
+    radial-gradient(ellipse 500px 350px at 78% 25%, rgba(20,184,166,.06) 0%, transparent 65%);
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--acc); margin-bottom: 18px; position: relative;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ""; display: block;
+  width: 16px; height: 1px; background: var(--acc); opacity: .4;
+}
+.hero h1 {
+  font-family: 'Syne', system-ui, sans-serif;
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  font-weight: 800; line-height: 1.05; text-wrap: balance;
+  max-width: 640px; margin: 0 auto 20px; position: relative;
+}
+.hero h1 em { font-style: normal; color: var(--pri) }
+.hero .sub {
+  font-size: 1.05rem; color: var(--mut);
+  max-width: 480px; margin: 0 auto 14px; line-height: 1.65; position: relative;
+}
+.price-pill {
+  display: inline-block; position: relative;
+  background: color-mix(in srgb, var(--pri) 10%, transparent);
+  border: 1px solid var(--bdr);
+  color: var(--pri); font-size: .8rem; font-weight: 600;
+  padding: 6px 16px; border-radius: 20px; margin-bottom: 36px;
+}
+
+/* === FORM CARD (glass) === */
+.form-card {
+  background: var(--card-glass);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--bdr);
+  border-radius: 16px; padding: 28px 24px 20px;
+  max-width: 440px; margin: 0 auto; position: relative;
+  box-shadow: 0 4px 32px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.flds { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px }
+.flds input {
+  background: var(--inp-bg);
+  border: 1.5px solid var(--card-bdr); border-radius: 10px;
+  color: var(--txt); font-size: .95rem; font-family: inherit;
+  padding: 13px 16px; outline: none; width: 100%;
+  transition: border-color .15s, box-shadow .15s;
+}
+.flds input::placeholder { color: var(--mut); opacity: .6 }
+.flds input:focus {
+  border-color: var(--pri);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pri) 12%, transparent);
+}
+.btn-join {
+  background: var(--pri); color: #fff;
+  font-family: inherit; font-size: .95rem; font-weight: 700;
+  border: none; border-radius: 10px; padding: 14px 20px;
+  cursor: pointer; width: 100%; letter-spacing: -.01em;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--pri) 35%, transparent),
+    0 6px 20px var(--glo),
+    0 0 32px color-mix(in srgb, var(--pri) 12%, transparent);
+  transition: background .15s, box-shadow .15s, transform .1s;
+}
+.btn-join:hover {
+  background: color-mix(in srgb, var(--pri) 88%, white);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--pri) 50%, transparent),
+    0 8px 28px var(--glo),
+    0 0 48px color-mix(in srgb, var(--pri) 18%, transparent);
+}
+.btn-join:active  { transform: scale(.98) }
+.btn-join:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none }
+.fnote {
+  font-size: .75rem; color: var(--mut);
+  text-align: center; margin-top: 10px; line-height: 1.4; opacity: .6;
+}
+.ferr { font-size: .8rem; color: #f87070; text-align: center; margin-top: 8px }
+.counter {
+  text-align: center; font-size: .8rem; font-weight: 600;
+  color: var(--acc); margin-top: 18px;
+  min-height: 1.2em; font-variant-numeric: tabular-nums; position: relative;
+}
+.ok-box { text-align: center; padding: 8px 0 4px }
+.ok-ring {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: color-mix(in srgb, var(--acc) 12%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--acc) 30%, transparent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: var(--acc); margin: 0 auto 12px;
+}
+.ok-box strong { display: block; color: var(--acc); font-size: 1rem; margin-bottom: 5px }
+.ok-box p { font-size: .85rem; color: var(--mut) }
+
+/* === PAIN (glass cards) === */
+.s-pain { background: var(--sur); padding-block: 72px }
+.s-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--pri); margin-bottom: 10px;
+}
+.s-tag::before {
+  content: ""; display: block;
+  width: 16px; height: 1px; background: currentColor; opacity: .45; flex-shrink: 0;
+}
+.s-tag.g { color: var(--acc) }
+.s-h2 {
+  font-family: 'Syne', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 800; line-height: 1.15; text-wrap: balance; margin-bottom: 36px;
+}
+.plist { list-style: none; display: flex; flex-direction: column; gap: 14px }
+.pi {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--card-glass); backdrop-filter: blur(16px);
+  border: 1px solid var(--card-bdr); border-radius: 12px; padding: 18px 16px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.pi:hover {
+  border-color: color-mix(in srgb, var(--pri) 25%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--pri) 7%, transparent);
+}
+.pi-icon {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+  background: color-mix(in srgb, var(--pri) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pri) 28%, transparent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; margin-top: 2px;
+}
+.pi-txt strong { display: block; font-weight: 600; font-size: .95rem; margin-bottom: 3px }
+.pi-txt span   { font-size: .875rem; color: var(--mut); line-height: 1.55 }
+
+/* === SOLUTION (glass cards) === */
+.s-sol { padding-block: 72px; background: var(--bg) }
+.sol-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.sol-card {
+  background: var(--card-glass); backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--card-bdr); border-radius: 14px; padding: 24px 20px;
+  box-shadow: 0 4px 28px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.04);
+  transition: border-color .2s, box-shadow .2s;
+}
+.sol-card:hover {
+  border-color: color-mix(in srgb, var(--acc) 30%, transparent);
+  box-shadow: 0 4px 28px rgba(0,0,0,.2), 0 0 20px color-mix(in srgb, var(--acc) 10%, transparent);
+}
+.sol-card .n {
+  font-family: 'Syne', system-ui, sans-serif;
+  font-size: 2.2rem; font-weight: 800;
+  color: var(--pri); opacity: .35; line-height: 1; margin-bottom: 14px;
+}
+.sol-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: 6px }
+.sol-card p  { font-size: .85rem; color: var(--mut); line-height: 1.55 }
+
+/* === FOOTER CTA === */
+.s-bottom { background: var(--sur); padding-block: 72px; text-align: center }
+.s-bottom h2 {
+  font-family: 'Syne', system-ui, sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800; text-wrap: balance; margin-bottom: 10px;
+}
+.s-bottom h2 em { font-style: normal; color: var(--pri) }
+.s-bottom p { color: var(--mut); font-size: .95rem; margin-bottom: 32px }
+
+/* === FOOTER === */
+footer {
+  padding-block: 24px; text-align: center;
+  font-size: .78rem; color: var(--mut);
+  border-top: 1px solid var(--bdr); background: var(--bg);
+}
+footer a { color: var(--acc); text-decoration: none }
+footer a:hover { text-decoration: underline }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-join { transition: none }
+  .btn-join:active { transform: none }
+}
+</style>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-inner">
+    <div class="logo-mark">
+      <svg viewBox="0 0 72 76" width="28" height="30" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg-h" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#F59E0B"/>
+            <stop offset="100%" stop-color="#14B8A6"/>
+          </linearGradient>
+        </defs>
+        <path d="M 10 10 L 50 10 L 10 50 L 50 50" stroke="url(#lg-h)" stroke-width="7" stroke-linecap="square" fill="none"/>
+        <path d="M 6 58 Q 28 70 52 58" stroke="url(#lg-h)" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".55"/>
+        <line x1="56" y1="27" x2="63" y2="27" stroke="url(#lg-h)" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+        <line x1="56" y1="33" x2="66" y2="33" stroke="url(#lg-h)" stroke-width="2.5" stroke-linecap="round" opacity=".38"/>
+        <line x1="56" y1="39" x2="61" y2="39" stroke="url(#lg-h)" stroke-width="2.5" stroke-linecap="round" opacity=".22"/>
+      </svg>
+      <div class="logo-word">Impul<b>Z</b>Ark</div>
+    </div>
+    <button class="hdr-btn" id="hdr-cta">Únete gratis</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="w">
+    <div class="eyebrow">Para MYPEs que quieren crecer</div>
+    <h1>Tu web, un solo proveedor,<br><em>sin sorpresas en la factura</em></h1>
+    <p class="sub">
+      Gestiona el backend de tu negocio sin depender de múltiples proveedores externos.
+      ImpulZArk crece contigo.
+    </p>
+    <div class="price-pill">✦&nbsp; Próximamente desde S/&nbsp;99&nbsp;/&nbsp;mes</div>
+
+    <div class="form-card" id="fc-hero">
+      <div class="flds">
+        <input id="h-nom" type="text"  name="nombre" placeholder="Tu nombre (opcional)" autocomplete="name">
+        <input id="h-eml" type="email" name="email"  placeholder="correo@empresa.com"   autocomplete="email">
+      </div>
+      <button class="btn-join" id="h-btn" type="button">Reservar mi lugar →</button>
+      <div class="ferr" id="h-err" hidden></div>
+      <div class="fnote">Sin compromisos · Te avisamos cuando lancemos</div>
+    </div>
+    <div class="counter" id="counter"></div>
+    <div id="h-ok" hidden></div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="s-pain">
+  <div class="w">
+    <div class="s-tag">¿Te suena familiar?</div>
+    <h2 class="s-h2">Crecer tu web hoy es complicado y caro</h2>
+    <ul class="plist">
+      <li class="pi">
+        <div class="pi-icon">🔌</div>
+        <div class="pi-txt">
+          <strong>Malabarismo de proveedores</strong>
+          <span>Hosting aquí, pasarela de pagos allá, soporte con otro. Cada uno tiene su precio, su proceso y sus problemas.</span>
+        </div>
+      </li>
+      <li class="pi">
+        <div class="pi-icon">📈</div>
+        <div class="pi-txt">
+          <strong>"¿Mi web podrá seguir creciendo?"</strong>
+          <span>Los constructores web ofrecen soluciones demasiado genéricas. Cuando necesitas algo específico, tienes que buscar otro proveedor — o contratar un desarrollador.</span>
+        </div>
+      </li>
+      <li class="pi">
+        <div class="pi-icon">💸</div>
+        <div class="pi-txt">
+          <strong>Facturas que no entiendes</strong>
+          <span>Cambias un módulo a mitad de mes y no sabes qué te van a cobrar. La incertidumbre frena tu negocio.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="s-sol">
+  <div class="w">
+    <div class="s-tag g">Lo que cambia con ImpulZArk</div>
+    <h2 class="s-h2">Un solo proveedor que crece contigo</h2>
+    <div class="sol-grid">
+      <div class="sol-card">
+        <div class="n">01</div>
+        <h3>Todo en un lugar</h3>
+        <p>Backend, módulos y gestión de tu web desde un solo panel. Sin integraciones extra ni intermediarios.</p>
+      </div>
+      <div class="sol-card">
+        <div class="n">02</div>
+        <h3>Escala sin trauma</h3>
+        <p>Agrega o elimina funcionalidades cuando tu negocio lo pida. Tu web evoluciona contigo sin cambiar de proveedor.</p>
+      </div>
+      <div class="sol-card">
+        <div class="n">03</div>
+        <h3>Facturación clara</h3>
+        <p>Pagas solo por los módulos activos. Un cambio a mitad de mes se refleja proporcional y sin letra chica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="s-bottom">
+  <div class="w">
+    <h2>¿Listo para <em>simplificar tu web?</em></h2>
+    <p>Únete a la lista y sé de los primeros en probar ImpulZArk.</p>
+    <div class="form-card" id="fc-foot" style="text-align:left">
+      <div class="flds">
+        <input id="f-nom" type="text"  name="nombre" placeholder="Tu nombre (opcional)" autocomplete="name">
+        <input id="f-eml" type="email" name="email"  placeholder="correo@empresa.com"   autocomplete="email">
+      </div>
+      <button class="btn-join" id="f-btn" type="button">Reservar mi lugar →</button>
+      <div class="ferr" id="f-err" hidden></div>
+      <div class="fnote">Sin compromisos · Te avisamos cuando lancemos</div>
+    </div>
+    <div id="f-ok" hidden></div>
+  </div>
+</section>
+
+<footer>
+  <div class="w">
+    <p>© 2026 ImpulZArk · Lima, Perú &nbsp;·&nbsp;
+      <a href="mailto:hola@impulzark.com">hola@impulzark.com</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+(async () => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('hdr-cta').onclick = () => {
+    document.getElementById('fc-hero').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    document.getElementById('h-eml').focus({ preventScroll: true });
+  };
+
+  const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+
+  async function submit(nomId, emlId, btnId, errId, cardId, okId) {
+    const btn    = document.getElementById(btnId);
+    const errEl  = document.getElementById(errId);
+    const email  = document.getElementById(emlId).value.trim().toLowerCase();
+    const nombre = document.getElementById(nomId).value.trim();
+
+    errEl.hidden = true;
+
+    if (!validEmail(email)) {
+      errEl.textContent = 'Ingresa un correo válido.';
+      errEl.hidden = false;
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Registrando…';
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, nombre: nombre || null }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw { code: data.error };
+      }
+
+      document.getElementById(cardId).hidden = true;
+      const okEl = document.getElementById(okId);
+      okEl.hidden = false;
+      okEl.innerHTML = `
+        <div class="ok-box">
+          <div class="ok-ring">✓</div>
+          <strong>¡Estás en la lista!</strong>
+          <p>Te avisaremos cuando ImpulZArk esté disponible.</p>
+        </div>`;
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Reservar mi lugar →';
+      errEl.textContent = err.code === 'already_exists'
+        ? 'Este correo ya está registrado.'
+        : 'Hubo un error. Intenta de nuevo.';
+      errEl.hidden = false;
+    }
+  }
+
+  document.getElementById('h-btn').onclick = () =>
+    submit('h-nom','h-eml','h-btn','h-err','fc-hero','h-ok');
+  document.getElementById('f-btn').onclick = () =>
+    submit('f-nom','f-eml','f-btn','f-err','fc-foot','f-ok');
+
+  ['h-eml','f-eml'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') e.target.closest('.form-card').querySelector('.btn-join').click();
+    });
+  });
+})();
+</script>
+
+</body></html>
