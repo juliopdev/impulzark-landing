@@ -397,7 +397,7 @@
     <h1 class="hero-anim-2">Tu web, un solo proveedor,<br><em>sin sorpresas en la factura</em></h1>
     <p class="sub hero-anim-3">
       Gestiona el backend de tu negocio sin depender de múltiples proveedores externos.
-      ImpulZArk crece contigo.
+      ImpulZArk impulsa tu negocio, crece contigo.
     </p>
     <div class="price-pill hero-anim-4">✦&nbsp; Próximamente desde S/&nbsp;19.90&nbsp;/&nbsp;mes</div>
 
@@ -436,10 +436,17 @@
         </div>
       </li>
       <li class="pi" data-aos="fade-up" data-aos-delay="160">
-        <div class="pi-icon">💸</div>
+        <div class="pi-icon">👨‍💻</div>
         <div class="pi-txt">
-          <strong>Facturas que no entiendes</strong>
-          <span>Cambias un módulo a mitad de mes y no sabes qué te van a cobrar. La incertidumbre frena tu negocio.</span>
+          <strong>Contratar devs: caro y lento</strong>
+          <span>Un equipo de desarrolladores a medida suena ideal, pero los presupuestos se disparan y los plazos se estiran. Cuando el proyecto termina, el equipo ya no está para el siguiente cambio.</span>
+        </div>
+      </li>
+      <li class="pi" data-aos="fade-up" data-aos-delay="240">
+        <div class="pi-icon">🤖</div>
+        <div class="pi-txt">
+          <strong>La IA soluciona uno y crea otro</strong>
+          <span>Las herramientas con IA prometen webs en minutos. El resultado es genérico, difícil de mantener y cuando algo falla, nadie en tu equipo sabe cómo arreglarlo.</span>
         </div>
       </li>
     </ul>
@@ -549,19 +556,33 @@
     document.getElementById('h-eml').focus({ preventScroll: true });
   });
 
-  /* ── Form submit ── */
-  const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  /* ── Sanitización y validación de inputs ── */
+  const MAX_EMAIL  = 254;
+  const MAX_NOMBRE = 100;
+
+  function sanitizeText(str, maxLen) {
+    return str
+      .replace(/[\x00-\x1F\x7F]/g, '') // control characters
+      .replace(/[<>]/g, '')             // angle brackets (XSS básico)
+      .trim()
+      .slice(0, maxLen);
+  }
+
+  function validEmail(e) {
+    if (!e || e.length > MAX_EMAIL) return false;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+  }
 
   async function submit(nomId, emlId, btnId, errId, cardId, okId) {
     const btn    = document.getElementById(btnId);
     const errEl  = document.getElementById(errId);
-    const email  = document.getElementById(emlId).value.trim().toLowerCase();
-    const nombre = document.getElementById(nomId).value.trim();
+    const email  = sanitizeText(document.getElementById(emlId).value, MAX_EMAIL).toLowerCase();
+    const nombre = sanitizeText(document.getElementById(nomId).value, MAX_NOMBRE) || null;
 
     errEl.hidden = true;
 
     if (!validEmail(email)) {
-      errEl.textContent = 'Ingresa un correo válido.';
+      errEl.textContent = 'Ingresa un correo válido (máx. 254 caracteres).';
       errEl.hidden = false;
       return;
     }
@@ -573,9 +594,11 @@
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, nombre: nombre || null }),
+        body: JSON.stringify({ email, nombre }),
       });
-      const data = await res.json();
+
+      let data = {};
+      try { data = await res.json(); } catch { /* ignore non-JSON */ }
 
       if (!res.ok) throw { code: data.error };
 
@@ -591,9 +614,12 @@
     } catch (err) {
       btn.disabled = false;
       btn.textContent = 'Reservar mi lugar →';
-      errEl.textContent = err.code === 'already_exists'
-        ? 'Este correo ya está registrado.'
-        : 'Hubo un error. Intenta de nuevo.';
+      const msgs = {
+        already_exists:     'Este correo ya está registrado.',
+        service_unavailable:'Servicio no disponible, intenta en un momento.',
+        invalid_email:      'Ingresa un correo válido.',
+      };
+      errEl.textContent = msgs[err.code] || 'Hubo un error. Intenta de nuevo.';
       errEl.hidden = false;
     }
   }
